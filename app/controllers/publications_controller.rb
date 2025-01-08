@@ -1,5 +1,7 @@
 class PublicationsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_publication, only: %i[ show edit update destroy ]
+  before_action :set_categories, only: %i[new create edit update]
 
   # GET /publications or /publications.json
   def index
@@ -13,6 +15,8 @@ class PublicationsController < ApplicationController
   # GET /publications/new
   def new
     @publication = Publication.new
+    #array for tag select
+    
   end
 
   # GET /publications/1/edit
@@ -21,7 +25,9 @@ class PublicationsController < ApplicationController
 
   # POST /publications or /publications.json
   def create
-    @publication = Publication.new(publication_params)
+    parametros = publication_params
+    parametros["user_id"] = current_user.id
+    @publication = Publication.new(parametros)
 
     respond_to do |format|
       if @publication.save
@@ -33,6 +39,8 @@ class PublicationsController < ApplicationController
       end
     end
   end
+
+  
 
   # PATCH/PUT /publications/1 or /publications/1.json
   def update
@@ -61,6 +69,16 @@ class PublicationsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_publication
       @publication = Publication.find(params[:id])
+    end
+
+    def set_categories
+      @categories = Category.all
+      @options = []
+      @categories.each do |category|
+        array =  [category.name, category.id]
+        @options << array 
+        end
+        puts @options
     end
 
     # Only allow a list of trusted parameters through.

@@ -9,4 +9,10 @@
 #   end
 #   
 #Add adminstrator user from seed
-User.create!(name: "John Doe", email: "admin@hotmail.com", password: "Superuser1234", password_confirmation: "Superuser1234", role: :admin, confirmed_at: Time.current)
+if User.count == 0
+  User.create!(name: "John Doe", email: "admin@hotmail.com", password: "Superuser1234", password_confirmation: "Superuser1234", role: :admin, confirmed_at: Time.current)
+end
+Category.create(name: "Love")
+Category.create(name: "Adventure")
+Category.create(name: "Fiction")
+Category.create(name: "Comedy")
