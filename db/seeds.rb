@@ -7,3 +7,6 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+#   
+#Add adminstrator user from seed
+User.create!(name: "John Doe", email: "admin@hotmail.com", password: "Superuser1234", password_confirmation: "Superuser1234", role: :admin, confirmed_at: Time.current)
