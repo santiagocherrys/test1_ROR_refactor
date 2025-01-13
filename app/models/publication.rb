@@ -1,6 +1,5 @@
 class Publication < ApplicationRecord
-
-  has_one :category, dependent: :destroy
+  belongs_to :category
   has_many :comments, dependent: :destroy
   belongs_to :user
 
