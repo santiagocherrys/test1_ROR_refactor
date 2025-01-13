@@ -1,6 +1,7 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_category, only: %i[ show edit update destroy ]
+  before_action :require_admin
 
   # GET /categories or /categories.json
   def index
@@ -65,9 +66,18 @@ class CategoriesController < ApplicationController
     def set_category
       @category = Category.find(params[:id])
     end
-
+    
     # Only allow a list of trusted parameters through.
     def category_params
       params.require(:category).permit(:type)
+    end
+
+    def require_admin
+      puts "Ejecuto"
+      puts current_user.role
+      if current_user.role == "writer"
+        puts "SI ENTRO AQUI"
+        redirect_to root_path, alert: "You don't have permission to access this page."
+      end
     end
 end
