@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
-  # before_action :set_comment, only: %i[ show edit update destroy ]
   before_action :set_publication
+  before_action :set_comment
 
   # GET /comments or /comments.json
   def index
@@ -18,6 +18,8 @@ class CommentsController < ApplicationController
 
   # GET /comments/1/edit
   def edit
+    puts "Entro a Edittttttttttttttttttttttttttt"
+    puts @comment.inspect
     @comment
   end
 
@@ -44,8 +46,9 @@ class CommentsController < ApplicationController
     parametros["user_id"] = current_user.id
     respond_to do |format|
       if @comment.update(parametros)
-        format.html { redirect_to @comment, notice: "Comment was successfully updated." }
-        format.json { render :show, status: :ok, location: @comment }
+        # Redirect back to the publication's show page
+        # Redirect back to the publication's show page
+        format.html { redirect_to @publication, notice: "Comment was successfully updated." }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
@@ -55,7 +58,6 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1 or /comments/1.json
   def destroy
-    puts "ENTRO A DELETEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
     @comment = @publication.comments.find(params[:id])  # Find the comment by ID
     @comment.destroy
 
@@ -66,7 +68,8 @@ class CommentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
-      @comment = @publication.comments.find(params[:id])  # Find the specific comment
+      @comment = @publication.comments.find(params[:id])
+      puts "ESTO ES COMMNET #{@comment.inspect}"  # Find the specific comment
     end
 
     def set_publication

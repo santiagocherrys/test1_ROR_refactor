@@ -12,10 +12,10 @@
         <li>
           <%usuario = comment.user%>
           <% if comment.user %>
-          <%puts "ESTO ES USUARIO #{usuario.class}"%>
+          <%puts "ESTO ES Comment #{comment.inspect}"%>
             <p><%= comment.description %> - <small>by <%= usuario.name %></small></p>
             <% if current_user == comment.user || current_user.role == "admin" %>
-              <%= link_to "Edit", edit_publication_comment_path(@publication, comment) %> |
+              <%= button_to "Edit", edit_publication_comment_path(@publication, comment), method: :get %> 
               <%= button_to "Delete", publication_comment_path(@publication, comment), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
             <% end %>
           <% end %>
