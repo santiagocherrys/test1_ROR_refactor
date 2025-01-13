@@ -3,8 +3,39 @@
 <%= render @publication %>
 
 <div>
+  <h3>Comments</h3>
+  <% if !@comments.nil? %>
+    <% puts "SI HAY COMENTARIOS"%>
+    <% puts @comments.inspect %>
+    <ul>
+      <% @comments.each do |comment| %>
+        <li>
+          <%usuario = comment.user%>
+          <% if comment.user %>
+          <%puts "ESTO ES USUARIO #{usuario.class}"%>
+            <p><%= comment.description %> - <small>by <%= usuario.name %></small></p>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No comments yet.</p>
+  <% end %>
+</div>
+
+<h4>Add a Comment</h4>
+<%= form_with model: [@publication, @new_comment], local: true do |form| %>
+  <div>
+    <%= form.label :description %>
+    <%= form.text_area :description, rows: 3 %>
+  </div>
+  <div>
+    <%= form.submit "Post Comment" %>
+  </div>
+<% end %>
+
+<div>
   <%= link_to "Edit this publication", edit_publication_path(@publication) %> |
   <%= link_to "Back to publications", publications_path %>
-
   <%= button_to "Destroy this publication", @publication, method: :delete %>
 </div>

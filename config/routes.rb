@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
-  resources :comments
-  resources :publications
+  #resources :comments
+  #resources :publications
+  resources :publications do
+    resources :comments
+  end
   devise_for :users
   resources :categories
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

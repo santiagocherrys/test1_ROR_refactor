@@ -10,6 +10,10 @@ class PublicationsController < ApplicationController
 
   # GET /publications/1 or /publications/1.json
   def show
+    @publication = Publication.find(params[:id])
+    #This ask if publications has comments and if publication does not have we return nil
+    @comments = @publication.comments.any? ? @publication.comments : nil
+    @new_comment = @publication.comments.build
   end
 
   # GET /publications/new
