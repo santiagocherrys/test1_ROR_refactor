@@ -14,6 +14,10 @@
           <% if comment.user %>
           <%puts "ESTO ES USUARIO #{usuario.class}"%>
             <p><%= comment.description %> - <small>by <%= usuario.name %></small></p>
+            <% if current_user == comment.user || current_user.role == "admin" %>
+              <%= link_to "Edit", edit_publication_comment_path(@publication, comment) %> |
+              <%= button_to "Delete", publication_comment_path(@publication, comment), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+            <% end %>
           <% end %>
         </li>
       <% end %>
@@ -35,7 +39,9 @@
 <% end %>
 
 <div>
-  <%= link_to "Edit this publication", edit_publication_path(@publication) %> |
-  <%= link_to "Back to publications", publications_path %>
-  <%= button_to "Destroy this publication", @publication, method: :delete %>
+  <% if @publication.user.name == current_user.name || current_user.role == "admin"%>
+    <%= link_to "Edit this publication", edit_publication_path(@publication) %> |
+    <%= button_to "Destroy this publication", @publication, method: :delete %>
+  <% end%>
+    <%= link_to "Back to publications", publications_path %>
 </div>
